@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './css/companets.css';
+import '/src/components/css/companets.css';
 import { MdModeEdit } from "react-icons/md";
 
 const MultiStepForm = ({ data, onSave }) => {

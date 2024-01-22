@@ -1,9 +1,26 @@
+// main.jsx
 import React from 'react';
-import { createRoot, render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
+import Inventory from './components/page/Inventory';
+import Invoice from './components/Invoice';
 
-createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const routes = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />
+  },
+  {
+    path: '/inventory',
+    element: <Inventory />,
+  },
+  {
+    path: '/invoice',
+    element: <Invoice/>
+  }
+]);
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={routes} />
 );
