@@ -78,6 +78,13 @@
     margin-bottom: 10px;
     position: relative;
 }
+.multi-step-form-list-item-rec{
+    padding: 10px;
+    border: 1px solid #000000;
+    margin-bottom: 10px;
+    background: #0000002d;
+    position: relative;
+}
 
 .edit-icon {
     width: 20px;

@@ -18,7 +18,7 @@ const routes = createBrowserRouter([
   {
     path: '/invoice',
     element: <Invoice/>
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
