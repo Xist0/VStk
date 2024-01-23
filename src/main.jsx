@@ -4,11 +4,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Inventory from './components/page/Inventory';
 import Invoice from './components/Invoice';
+import AuthLink from './components/AuthLink';
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <AuthLink/>
   },
   {
     path: '/inventory',
@@ -18,6 +19,10 @@ const routes = createBrowserRouter([
     path: '/invoice',
     element: <Invoice/>
   },
+  {
+    path: '/auth',
+    element: <App/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
