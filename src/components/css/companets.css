@@ -11,19 +11,41 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 620px;
-    margin-top: 40px
+    margin-top: 30%;
 }
-.components-end{
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.nav a {
+    background: #007bff;
+    color: #fff;
+    border-radius: 6px;
+    width: 100%;
+    padding: 10px 50px;
+    max-width: 250px;
+    font-size: 20px;
+    text-align: center;
+
+}
+.components-end {
     display: flex;
     flex-direction: column;
     padding: 10px;
     width: 100%;
 }
-.components-end h1{
+
+.components-end h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
 }
+
 .multi-step-form-container {
     padding: 20px;
     width: 100%;
@@ -50,11 +72,13 @@
     border: 1px solid;
     border-radius: 6px;
 }
-.multi-step-form-list-item input{
+
+.multi-step-form-list-item input {
     border-radius: 6px;
     border: 1px solid;
     width: 40%;
 }
+
 .multi-step-form-button {
     display: flex;
     display: flex;
@@ -95,25 +119,30 @@
     flex-direction: column;
     gap: 10px;
 }
-.multi-step-form-list-editor{
+
+.multi-step-form-list-editor {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.multi-step-form-list-editor label{
+
+.multi-step-form-list-editor label {
     display: flex;
     justify-content: left;
     align-items: center;
 }
-.multi-step-form-list-editor label input{
+
+.multi-step-form-list-editor label input {
     padding: 4px 15px;
     font-size: 14px;
 }
+
 .multi-step-form-list-editor label h4 {
     width: 100%;
     max-width: 230px;
 }
-.multi-step-form-list-item-rec{
+
+.multi-step-form-list-item-rec {
     padding: 10px;
     border: 1px solid #000000;
     margin-bottom: 10px;
