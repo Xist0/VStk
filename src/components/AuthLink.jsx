@@ -14,7 +14,6 @@ function AuthLink() {
                 },
             });
 
-            // Если авторизация успешна, перенаправляем пользователя на главную страницу
             if (response.status === 200) {
                 window.location.href = '/auth';
             } else {
