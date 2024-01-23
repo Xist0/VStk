@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function AuthLink() {
     const [verificationCode, setVerificationCode] = useState('');
+    const [generatedCode, setGeneratedCode] = useState('');
     const [error, setError] = useState('');
+
+    // Генерация нового кода доступа
+    const generateNewAccessCode = async () => {
+        try {
+            const response = await axios.get('https://localhost:3000/generateNewAccessCode');
+            setGeneratedCode(response.data.accessCode);
+        } catch (error) {
+            console.error('Error generating new access code:', error);
+        }
+    };
 
     // Проверка кода при авторизации
     const authorize = async () => {
@@ -25,10 +36,17 @@ function AuthLink() {
         }
     };
 
+    useEffect(() => {
+        generateNewAccessCode(); // Вызов при загрузке компонента для отображения первоначального кода
+    }, []);
+
     return (
         <div className="components">
             <h1> Аунтификация</h1>
-            <div >
+            <div>
+                <p>Новый код: {generatedCode}</p>
+            </div>
+            <div>
                 <label>Код доступа:</label>
                 <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
             </div>
