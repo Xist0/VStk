@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { createRoot } from 'react-dom/client';
 
 function AuthLink() {
     const [verificationCode, setVerificationCode] = useState('');
@@ -10,14 +9,13 @@ function AuthLink() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            // Выполняем запрос на обновление кода доступа
-            generateNewAccessCode();
-        }, 5000); // Каждые 5 секунд
 
-        return () => clearInterval(interval); // Очищаем интервал при размонтировании компонента
+            generateNewAccessCode();
+        }, 5000); 
+
+        return () => clearInterval(interval);
     }, []);
 
-    // Проверка кода при авторизации
     const authorize = async () => {
         try {
             const response = await axios.post('https://localhost:3000/authorize', { verificationCode }, {
@@ -36,8 +34,6 @@ function AuthLink() {
             console.error('Authorization error:', error);
         }
     };
-
-    // Функция для генерации нового кода доступа
     const generateNewAccessCode = async () => {
         try {
             const response = await axios.get('https://localhost:3000/generateNewAccessCode');
@@ -64,7 +60,4 @@ function AuthLink() {
         </div>
     );
 }
-
-// Используем createRoot для рендеринга компонента
-
 export default AuthLink;
