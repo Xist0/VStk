@@ -87,6 +87,7 @@ select {
 	font-size: inherit;
 	color: inherit;
 	background-color: transparent;
+	border: 1px solid;
 }
 
 input::-ms-clear {
