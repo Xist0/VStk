@@ -16,33 +16,49 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let accessCode = generateAccessCode(); // Изначальный шестизначный код доступа
+let accessCode = generateAccessCode();
+let subscribers = [];
 
-// Генератор шестизначного кода доступа
+// Генерация нового шестизначного кода доступа
 function generateAccessCode() {
-  return Math.floor(100000 + Math.random() * 900000);
+  return Math.floor(100000 + Math.random() * 900000); // Генерация случайного числа от 100000 до 999999
 }
 
-// Обработчик получения текущего кода доступа
-app.get('/getAccessCode', (req, res) => {
-  res.json({ accessCode });
+// Подписка на изменение кода доступа
+app.get('/subscribeAccessCode', (req, res) => {
+  const newSubscriber = (newCode) => {
+    res.json({ accessCode: newCode });
+  };
+
+  subscribers.push(newSubscriber);
+
+  // Отправляем текущий код доступа вновь подписавшемуся клиенту
+  newSubscriber(accessCode);
 });
 
-// Обработчик генерации нового кода доступа
-app.get('/generateNewAccessCode', (req, res) => {
+// Генерация нового кода доступа и уведомление подписчиков
+function generateNewAccessCode() {
   accessCode = generateAccessCode();
-  res.json({ accessCode });
-});
+  console.log('Access code regenerated:', accessCode);
 
-// Обработчик проверки кода при авторизации
+  // Уведомляем всех подписчиков об изменении кода доступа
+  subscribers.forEach(subscriber => subscriber(accessCode));
+}
+
+// Установка таймера для периодической генерации нового кода доступа
+setInterval(generateNewAccessCode, 5000);
+
+// Проверка кода доступа
 app.post('/authorize', (req, res) => {
-  const { verificationCode } = req.body;
+  const { authorizationCode } = req.body;
 
   // Проверяем, совпадает ли введенный код с текущим кодом доступа
-  if (verificationCode === accessCode.toString()) {
-    res.sendStatus(200);
+  if (authorizationCode === accessCode.toString()) {
+    // Если совпадает, возвращаем успешный результат
+    res.json({ success: true });
   } else {
-    res.status(401).json({ error: 'Unauthorized' });
+    // Если не совпадает, возвращаем ошибку
+    res.status(401).json({ success: false, error: 'Unauthorized' });
   }
 });
 

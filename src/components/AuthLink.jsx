@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { createRoot } from 'react-dom/client';
 
 function AuthLink() {
     const [verificationCode, setVerificationCode] = useState('');
-    const [generatedCode, setGeneratedCode] = useState('');
     const [error, setError] = useState('');
 
-    // Генерация нового кода доступа
-    const generateNewAccessCode = async () => {
-        try {
-            const response = await axios.get('https://localhost:3000/generateNewAccessCode');
-            setGeneratedCode(response.data.accessCode);
-        } catch (error) {
-            console.error('Error generating new access code:', error);
-        }
-    };
+    const [accessCode, setAccessCode] = useState('');
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // Выполняем запрос на обновление кода доступа
+            generateNewAccessCode();
+        }, 5000); // Каждые 5 секунд
+
+        return () => clearInterval(interval); // Очищаем интервал при размонтировании компонента
+    }, []);
 
     // Проверка кода при авторизации
     const authorize = async () => {
@@ -36,14 +37,19 @@ function AuthLink() {
         }
     };
 
-    // Обновление кода доступа при загрузке компонента
-    useEffect(() => {
-        generateNewAccessCode();
-    }, []);
+    // Функция для генерации нового кода доступа
+    const generateNewAccessCode = async () => {
+        try {
+            const response = await axios.get('https://localhost:3000/generateNewAccessCode');
+            setAccessCode(response.data.accessCode);
+        } catch (error) {
+            console.error('Error generating new access code:', error);
+        }
+    };
 
     return (
         <div className="components">
-            <h1> Аутентификация</h1>
+            <h1> Аунтификация</h1>
             <div>
                 <label>Код доступа:</label>
                 <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
@@ -52,12 +58,13 @@ function AuthLink() {
                 <button onClick={authorize}>Ввести</button>
             </div>
             <div>
-                <p>Новый код доступа: {generatedCode}</p>
-                <button onClick={generateNewAccessCode}>Обновить код доступа</button>
+                <p>Новый код: {accessCode}</p>
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }
+
+// Используем createRoot для рендеринга компонента
 
 export default AuthLink;
