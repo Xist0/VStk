@@ -6,7 +6,6 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
-// Разрешение CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -23,10 +22,8 @@ app.post('/authorize', (req, res) => {
 
   // Проверяем, совпадает ли введенный код с ожидаемым
   if (verificationCode === 'Test123') {
-    // Код правильный, возвращаем успешный статус
     res.sendStatus(200);
   } else {
-    // Код неверный, возвращаем статус "Unauthorized"
     res.status(401).json({ error: 'Unauthorized' });
   }
 });
@@ -37,7 +34,6 @@ const options = {
   cert: fs.readFileSync('./CRMServe.crt'),
 };
 
-// Исправленная строка создания HTTPS-сервера
 const server = https.createServer(options, app);
 
 server.listen(port, () => {
