@@ -2,20 +2,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     margin: auto;
     padding: 20px;
     width: 100%;
-    height: auto;
+    height: 82vh;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 620px;
-    margin-top: 30%;
 }
-.components h1{
+
+.components h1 {
     font-size: 20px;
 }
+
+.milti-containet-rext {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
 .nav {
     display: flex;
     flex-direction: column;
@@ -35,6 +41,7 @@
     text-align: center;
 
 }
+
 .components-end {
     display: flex;
     flex-direction: column;
@@ -42,10 +49,10 @@
     width: 100%;
 }
 
-.components-end h1 {
+.components-end h3 {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    align-items: center;
 }
 
 .multi-step-form-container {
@@ -118,13 +125,40 @@
     margin-bottom: 10px;
     position: relative;
     display: flex;
-    flex-direction: column;
     gap: 10px;
+    flex-wrap: wrap;
     font-size: 20px;
+    align-items: center;
 }
-.multi-step-form-list-item p{
+
+.multi-step-form-list-item>edited {
+    display: flex;
+    flex-direction: column;
+}
+
+.multi-step-form-list-item p {
     font-size: 18px;
+    border: 1px solid;
+    border-radius: 3px;
+    padding: 5px;
 }
+
+.multi-step-form-list-item-rec {
+    padding: 10px;
+    border: 1px solid #000000;
+    margin-bottom: 10px;
+    background: #0000002d;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+}
+
+.multi-step-form-list-item-rec h1 {
+    font-size: 16px;
+}
+
 .multi-step-form-list-editor {
     display: flex;
     flex-direction: column;
@@ -133,7 +167,7 @@
 
 .multi-step-form-list-editor label {
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
     background: #fff;
     z-index: 999;
@@ -143,13 +177,15 @@
     padding: 4px 15px;
     font-size: 14px;
 }
- #comments{
+
+#comments {
     display: flex;
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
 }
-#comment-inp{
+
+#comment-inp {
     width: 100%;
     border: 1px solid;
     border-radius: 6px;
@@ -158,27 +194,17 @@
     font-size: 16px;
     padding: 10px;
     overflow-y: scroll;
-  height: 200px;
-}
-.comment-wrapper {
-    overflow: scroll;
-}
-.comment-wrapper > .comment{
-    height: auto;
-    max-height: 200px;
-}
-.multi-step-form-list-editor label h4 {
-    width: 100%;
-    font-size: 18px;
-    max-width: 230px;
+    height: 200px;
 }
 
-.multi-step-form-list-item-rec {
-    padding: 10px;
-    border: 1px solid #000000;
-    margin-bottom: 10px;
-    background: #0000002d;
-    position: relative;
+.comment-wrapper {
+    overflow: scroll;
+    width: 100%;
+}
+
+.comment-wrapper>.comment {
+    height: auto;
+    max-height: 200px;
 }
 
 .edit-icon {
@@ -201,4 +227,89 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+@media (max-width: 300px) {
+
+    h1,
+    h2,
+    h3,
+    h4 p {
+        font-size: 12px !important;
+    }
+
+    .multi-step-form-button {
+        width: 0;
+
+    }
+
+    .multi-step-form-button>button {
+        font-size: 12px;
+        padding: 5px 0;
+        margin-top: 0;
+    }
+
+    .edit-icon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .components {
+        padding: 0;
+    }
+
+    .multi-step-form-button {
+        display: flex;
+        justify-content: center;
+        gap: calc(100% - 90%);
+        width: 100%;
+    }
+
+    body {
+        width: 100%;
+    }
+
+    .multi-step-form-list-editor label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        z-index: 999;
+    }
+
+    #comment-inp {
+        width: 100%;
+        border: 1px solid;
+        border-radius: 6px;
+        height: auto;
+        overflow: hidden;
+        overflow-y: hidden;
+        font-size: 12px;
+        padding: 10px;
+        overflow-y: scroll;
+        height: calc(100% - 20%);
+    }
+
+    .multi-step-form-list-editor label input {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    .multi-step-form-list-item-rec {
+        padding: 10px;
+        border: 1px solid #000000;
+        margin-bottom: 10px;
+        background: #0000002d;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+                flex-wrap: wrap;
+    }
+    .multi-step-form-list-item p {
+        font-size: 12px;
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 2px;
+      }
 }

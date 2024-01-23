@@ -121,5 +121,5 @@ legend {
 
 body {
 	width: calc(100% - 10%);
-	margin: auto;
+	margin: 15px auto;
 }

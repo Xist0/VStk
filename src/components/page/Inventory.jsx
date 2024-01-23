@@ -45,7 +45,7 @@ const Inventory = () => {
         }));
 
         console.log(updatedFormData);
-        // Здесь можете добавить вашу логику сохранения данных вместо console.log
+        alert('Успешно ')
     };
 
     const handlePreview = () => {
@@ -89,10 +89,14 @@ const Inventory = () => {
         <div className='components'>
             {step === 1 && (
                 <>
-                    <h1>Список элементов:</h1>
+                    <h1>Приход</h1>
                     <ul className="multi-step-form-list">
                         {formData.map((item, index) => (
                             <li key={index} className={`multi-step-form-list-item ${quantityChanges[index] !== undefined ? 'edited' : ''}`}>
+
+                                <div className="milti-containet-rext">
+                                    <div className="product_name"><h1>{item.product_name} </h1></div> <div className="product_coll"><h3>{staticQuantities[index]}</h3></div>
+                                </div>
                                 <div>
                                     <MdModeEdit
                                         alt="Edit"
@@ -100,13 +104,10 @@ const Inventory = () => {
                                         onClick={() => handleEdit(index)}
                                     />
                                 </div>
-                                <p>
-                                    {item.product_name} - {staticQuantities[index]}
-                                </p>
                                 {activeIndex === index && (
                                     <div className='multi-step-form-list-editor'>
                                         <label>
-                                            <h4>Изменить количество:</h4>
+                                            <h4>Изменить:</h4>
                                             <input
                                                 type="number"
                                                 value={quantityChanges[index] || ''}
@@ -137,16 +138,16 @@ const Inventory = () => {
             {step === 2 && (
                 <>
                     <div className="components-end">
-                        <h1>Предпросмотр:</h1>
+                        <h3>Предпросмотр:</h3>
                         <ul className='multi-step-form-list'>
                             {formData.map((item, index) => (
                                 <li key={index} className={quantityChanges[index] !== undefined ? 'multi-step-form-list-item-rec' : 'multi-step-form-list-item'}>
-                                    {item.product_name} - {quantityChanges[index] !== undefined ? `Изменено: ${quantityChanges[index]}` : item.product_quantity}
+                                    <h1>{item.product_name}</h1> {quantityChanges[index] !== undefined ? <h4>Изменено: {quantityChanges[index]}</h4> : <h3>{item.product_quantity}</h3>}
                                     <br />
                                     <div className="comment-wrapper">
                                         {commentChanges[index] !== undefined && (
-                                            <div className="comment" style={{ /* Ваши стили здесь */ }}>
-                                               <h2>Комментарий:</h2>  <br/> {commentChanges[index]}
+                                            <div className="comment">
+                                                <h2>Комментарий:</h2>  <br /> <p>{commentChanges[index]}</p>
                                             </div>
                                         )}
                                     </div>
