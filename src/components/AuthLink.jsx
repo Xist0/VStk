@@ -36,22 +36,24 @@ function AuthLink() {
         }
     };
 
+    // Обновление кода доступа при загрузке компонента
     useEffect(() => {
-        generateNewAccessCode(); // Вызов при загрузке компонента для отображения первоначального кода
+        generateNewAccessCode();
     }, []);
 
     return (
         <div className="components">
-            <h1> Аунтификация</h1>
-            <div>
-                <p>Новый код: {generatedCode}</p>
-            </div>
+            <h1> Аутентификация</h1>
             <div>
                 <label>Код доступа:</label>
                 <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
             </div>
             <div>
                 <button onClick={authorize}>Ввести</button>
+            </div>
+            <div>
+                <p>Новый код доступа: {generatedCode}</p>
+                <button onClick={generateNewAccessCode}>Обновить код доступа</button>
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
