@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MdModeEdit } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import '/src/components/css/companets.css';
 import { crs } from '/src/index';
+import '/src/components/css/companets.css';
 
 const Inventory = () => {
     const [formData, setFormData] = useState(crs);
@@ -57,52 +56,83 @@ const Inventory = () => {
         setStep(1);
     };
 
+    const textareaRefs = useRef([]);
+
+    useEffect(() => {
+        textareaRefs.current.forEach((textareaRef) => {
+            if (textareaRef) {
+                textareaRef.style.height = 'auto';
+                textareaRef.style.height = `${textareaRef.scrollHeight}px`;
+            }
+        });
+    }, [step]);
+
+    const handleTextareaChange = (index, event) => {
+        const textareaRef = textareaRefs.current[index];
+
+        if (textareaRef) {
+            textareaRef.style.height = 'auto';
+            textareaRef.style.height = `${textareaRef.scrollHeight}px`;
+
+            const isOverflowing = textareaRef.scrollHeight > textareaRef.clientHeight;
+
+            if (isOverflowing) {
+                // Добавляем перенос строки к тексту, если блок стал выше, чем его содержимое
+                handleCommentChange(index, event.target.value + '\n');
+            } else {
+                handleCommentChange(index, event.target.value);
+            }
+        }
+    };
+
     return (
         <div className='components'>
-{step === 1 && (
-    <>
-        <h1>Список элементов:</h1>
-        <ul className="multi-step-form-list">
-            {formData.map((item, index) => (
-                <li key={index} className={`multi-step-form-list-item ${quantityChanges[index] !== undefined ? 'edited' : ''}`}>
-                    <div>
-                        <MdModeEdit
-                            alt="Edit"
-                            className="edit-icon"
-                            onClick={() => handleEdit(index)}
-                        />
+            {step === 1 && (
+                <>
+                    <h1>Список элементов:</h1>
+                    <ul className="multi-step-form-list">
+                        {formData.map((item, index) => (
+                            <li key={index} className={`multi-step-form-list-item ${quantityChanges[index] !== undefined ? 'edited' : ''}`}>
+                                <div>
+                                    <MdModeEdit
+                                        alt="Edit"
+                                        className="edit-icon"
+                                        onClick={() => handleEdit(index)}
+                                    />
+                                </div>
+                                <p>
+                                    {item.product_name} - {staticQuantities[index]}
+                                </p>
+                                {activeIndex === index && (
+                                    <div className='multi-step-form-list-editor'>
+                                        <label>
+                                            <h4>Изменить количество:</h4>
+                                            <input
+                                                type="number"
+                                                value={quantityChanges[index] || ''}
+                                                onChange={(e) => handleQuantityChange(index, e.target.value)}
+                                            />
+                                        </label>
+                                        <label id='comments'>
+                                            <h4>Комментарий:</h4>
+                                            <textarea
+                                                type="text"
+                                                id='comment-inp'
+                                                value={commentChanges[index] || ''}
+                                                onChange={(e) => handleTextareaChange(index, e)}
+                                                ref={(ref) => (textareaRefs.current[index] = ref)}
+                                            />
+                                        </label>
+                                    </div>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="multi-step-form-button">
+                        <button onClick={handlePreview}>Предпросмотр</button>
                     </div>
-                    <p>
-                        {item.product_name} - {staticQuantities[index]}
-                    </p>
-                    {activeIndex === index && (
-                        <div className='multi-step-form-list-editor'>
-                            <label>
-                                <h4>Изменить количество:</h4>
-                                <input
-                                    type="number"
-                                    value={quantityChanges[index] || ''}
-                                    onChange={(e) => handleQuantityChange(index, e.target.value)}
-                                />
-                            </label>
-                            <label>
-                                <h4>Комментарий:</h4>
-                                <input
-                                    type="text"
-                                    value={commentChanges[index] || ''}
-                                    onChange={(e) => handleCommentChange(index, e.target.value)}
-                                />
-                            </label>
-                        </div>
-                    )}
-                </li>
-            ))}
-        </ul>
-        <div className="multi-step-form-button">
-            <button onClick={handlePreview}>Предпросмотр</button>
-        </div>
-    </>
-)}
+                </>
+            )}
 
             {step === 2 && (
                 <>
@@ -113,9 +143,13 @@ const Inventory = () => {
                                 <li key={index} className={quantityChanges[index] !== undefined ? 'multi-step-form-list-item-rec' : 'multi-step-form-list-item'}>
                                     {item.product_name} - {quantityChanges[index] !== undefined ? `Изменено: ${quantityChanges[index]}` : item.product_quantity}
                                     <br />
-                                    {commentChanges[index] !== undefined && (
-                                        <>Комментарий: {commentChanges[index]}</>
-                                    )}
+                                    <div className="comment-wrapper">
+                                        {commentChanges[index] !== undefined && (
+                                            <div className="comment">
+                                                Комментарий: {commentChanges[index]}
+                                            </div>
+                                        )}
+                                    </div>
                                 </li>
                             ))}
                         </ul>
