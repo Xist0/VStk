@@ -76,9 +76,9 @@ const Inventory = () => {
                         {item.product_name} - {staticQuantities[index]}
                     </p>
                     {activeIndex === index && (
-                        <div>
+                        <div className='multi-step-form-list-editor'>
                             <label>
-                                Изменить количество:
+                                <h4>Изменить количество:</h4>
                                 <input
                                     type="number"
                                     value={quantityChanges[index] || ''}
@@ -86,7 +86,7 @@ const Inventory = () => {
                                 />
                             </label>
                             <label>
-                                Комментарий:
+                                <h4>Комментарий:</h4>
                                 <input
                                     type="text"
                                     value={commentChanges[index] || ''}
@@ -106,7 +106,7 @@ const Inventory = () => {
 
             {step === 2 && (
                 <>
-                    <div className="components">
+                    <div className="components-end">
                         <h1>Предпросмотр:</h1>
                         <ul className='multi-step-form-list'>
                             {formData.map((item, index) => (
