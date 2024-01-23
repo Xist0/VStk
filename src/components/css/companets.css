@@ -164,7 +164,6 @@
     overflow: scroll;
 }
 .comment-wrapper > .comment{
-    overflow: scroll;
     height: auto;
     max-height: 200px;
 }

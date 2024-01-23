@@ -66,7 +66,6 @@ const Inventory = () => {
             }
         });
     }, [step]);
-
     const handleTextareaChange = (index, event) => {
         const textareaRef = textareaRefs.current[index];
 
@@ -74,16 +73,17 @@ const Inventory = () => {
             textareaRef.style.height = 'auto';
             textareaRef.style.height = `${textareaRef.scrollHeight}px`;
 
-            const isOverflowing = textareaRef.scrollHeight > textareaRef.clientHeight;
+            const lines = event.target.value.split('\n');
+            const lastLine = lines.pop();
 
-            if (isOverflowing) {
-                // Добавляем перенос строки к тексту, если блок стал выше, чем его содержимое
-                handleCommentChange(index, event.target.value + '\n');
-            } else {
-                handleCommentChange(index, event.target.value);
-            }
+            // Объединяем строки с символом новой строки
+            const combinedText = lines.join('\n') + (lastLine.trim() !== '' ? '\n' + lastLine : '');
+
+            handleCommentChange(index, combinedText);
         }
     };
+
+
 
     return (
         <div className='components'>
@@ -145,8 +145,8 @@ const Inventory = () => {
                                     <br />
                                     <div className="comment-wrapper">
                                         {commentChanges[index] !== undefined && (
-                                            <div className="comment">
-                                                Комментарий: {commentChanges[index]}
+                                            <div className="comment" style={{ /* Ваши стили здесь */ }}>
+                                               <h2>Комментарий:</h2>  <br/> {commentChanges[index]}
                                             </div>
                                         )}
                                     </div>
