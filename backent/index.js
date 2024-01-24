@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const https = require('https');
 const fs = require('fs');
+const ip = require('ip');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const port = 3000;
@@ -20,7 +22,7 @@ let accessCode = generateAccessCode();
 
 // Генерация нового шестизначного кода доступа
 function generateAccessCode() {
-  return Math.floor(100000 + Math.random() * 900000); // Генерация случайного числа от 100000 до 999999
+  return Math.floor(100000 + Math.random() * 900000);
 }
 
 // Получение текущего кода доступа
@@ -37,7 +39,7 @@ app.get('/generateNewAccessCode', (req, res) => {
   setTimeout(() => {
     accessCode = generateAccessCode();
     console.log('Access code expired and regenerated.');
-  }, 50000);
+  }, 500000);
 });
 
 // Проверка кода доступа
@@ -54,6 +56,13 @@ app.post('/authorize', (req, res) => {
   }
 });
 
+// Проксирование запросов фронта к API бэкенда
+const apiProxy = createProxyMiddleware('/api', {
+  target: `https://${ip.address()}:${port}`,
+  changeOrigin: true,
+});
+app.use(apiProxy);
+
 // Сертификат безопасности
 const options = {
   key: fs.readFileSync('./CRMServe-private.key'),
@@ -63,5 +72,6 @@ const options = {
 const server = https.createServer(options, app);
 
 server.listen(port, () => {
-  console.log(`Server is running on https://localhost:${port}`);
+  const serverAddress = `https://${ip.address()}:${port}`;
+  console.log(`Server is running on ${serverAddress}`);
 });
