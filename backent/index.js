@@ -20,38 +20,34 @@ app.use(bodyParser.json());
 
 let accessCode = generateAccessCode();
 
-// Генерация нового шестизначного кода доступа
 function generateAccessCode() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
-// Получение текущего кода доступа
 app.get('/getAccessCode', (req, res) => {
   res.json({ accessCode });
 });
 
-// Генерация нового кода доступа и установка таймера для его удаления через 5 секунд
+
 app.get('/generateNewAccessCode', (req, res) => {
   accessCode = generateAccessCode();
+  console.log(`Сгенерирован новый код - ${accessCode}`);
   res.json({ accessCode });
 
-  // Установка таймера для удаления кода через 5 секунд
+  // Установка таймера для удаления кода
   setTimeout(() => {
     accessCode = generateAccessCode();
-    console.log('Access code expired and regenerated.');
-  }, 500000);
+    console.log(`Старый код удален - Сгенерирован новый код  (${accessCode})`);
+  }, 5000);
 });
 
 // Проверка кода доступа
 app.post('/authorize', (req, res) => {
   const { authorizationCode } = req.body;
 
-  // Проверяем, совпадает ли введенный код с текущим кодом доступа
   if (authorizationCode === accessCode.toString()) {
-    // Если совпадает, возвращаем успешный результат
     res.json({ success: true });
   } else {
-    // Если не совпадает, возвращаем ошибку
     res.status(401).json({ success: false, error: 'Unauthorized' });
   }
 });
@@ -63,7 +59,6 @@ const apiProxy = createProxyMiddleware('/api', {
 });
 app.use(apiProxy);
 
-// Сертификат безопасности
 const options = {
   key: fs.readFileSync('./CRMServe-private.key'),
   cert: fs.readFileSync('./CRMServe.crt'),
