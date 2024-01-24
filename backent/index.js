@@ -38,7 +38,7 @@ app.get('/generateNewAccessCode', (req, res) => {
   setTimeout(() => {
     accessCode = generateAccessCode();
     console.log(`Старый код удален - Сгенерирован новый код  (${accessCode})`);
-  }, 5000);
+  }, 50000);
 });
 
 // Проверка кода доступа
