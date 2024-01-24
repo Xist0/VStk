@@ -37,7 +37,7 @@ app.get('/generateNewAccessCode', (req, res) => {
   setTimeout(() => {
     accessCode = generateAccessCode();
     console.log('Access code expired and regenerated.');
-  }, 500000);
+  }, 50000);
 });
 
 // Проверка кода доступа
