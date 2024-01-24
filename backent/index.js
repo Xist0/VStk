@@ -17,36 +17,28 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 let accessCode = generateAccessCode();
-let subscribers = [];
 
 // Генерация нового шестизначного кода доступа
 function generateAccessCode() {
   return Math.floor(100000 + Math.random() * 900000); // Генерация случайного числа от 100000 до 999999
 }
 
-// Подписка на изменение кода доступа
-app.get('/subscribeAccessCode', (req, res) => {
-  const newSubscriber = (newCode) => {
-    res.json({ accessCode: newCode });
-  };
-
-  subscribers.push(newSubscriber);
-
-  // Отправляем текущий код доступа вновь подписавшемуся клиенту
-  newSubscriber(accessCode);
+// Получение текущего кода доступа
+app.get('/getAccessCode', (req, res) => {
+  res.json({ accessCode });
 });
 
-// Генерация нового кода доступа и уведомление подписчиков
-function generateNewAccessCode() {
+// Генерация нового кода доступа и установка таймера для его удаления через 5 секунд
+app.get('/generateNewAccessCode', (req, res) => {
   accessCode = generateAccessCode();
-  console.log('Access code regenerated:', accessCode);
+  res.json({ accessCode });
 
-  // Уведомляем всех подписчиков об изменении кода доступа
-  subscribers.forEach(subscriber => subscriber(accessCode));
-}
-
-// Установка таймера для периодической генерации нового кода доступа
-setInterval(generateNewAccessCode, 5000);
+  // Установка таймера для удаления кода через 5 секунд
+  setTimeout(() => {
+    accessCode = generateAccessCode();
+    console.log('Access code expired and regenerated.');
+  }, 500000);
+});
 
 // Проверка кода доступа
 app.post('/authorize', (req, res) => {

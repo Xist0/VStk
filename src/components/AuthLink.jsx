@@ -3,26 +3,30 @@ import axios from 'axios';
 
 function AuthLink() {
     const [verificationCode, setVerificationCode] = useState('');
+    const [generatedCode, setGeneratedCode] = useState('');
     const [error, setError] = useState('');
 
-    const [accessCode, setAccessCode] = useState('');
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-
-            generateNewAccessCode();
-        }, 5000); 
-
-        return () => clearInterval(interval);
-    }, []);
+    // Генерация нового кода доступа
+    const generateNewAccessCode = async () => {
+        try {
+            const response = await axios.get('https://localhost:3000/generateNewAccessCode');
+            setGeneratedCode(response.data.accessCode);
+        } catch (error) {
+            console.error('Error generating new access code:', error);
+        }
+    };
 
     const authorize = async () => {
         try {
-            const response = await axios.post('https://localhost:3000/authorize', { verificationCode }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await axios.post(
+                'https://localhost:3000/authorize',
+                { authorizationCode: verificationCode }, // убедитесь, что код отправляется в теле запроса
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             if (response.status === 200) {
                 window.location.href = '/auth';
@@ -34,18 +38,14 @@ function AuthLink() {
             console.error('Authorization error:', error);
         }
     };
-    const generateNewAccessCode = async () => {
-        try {
-            const response = await axios.get('https://localhost:3000/generateNewAccessCode');
-            setAccessCode(response.data.accessCode);
-        } catch (error) {
-            console.error('Error generating new access code:', error);
-        }
-    };
+    // Обновление кода доступа при загрузке компонента
+    useEffect(() => {
+        generateNewAccessCode();
+    }, []);
 
     return (
         <div className="components">
-            <h1> Аунтификация</h1>
+            <h1> Аутентификация</h1>
             <div>
                 <label>Код доступа:</label>
                 <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
@@ -54,10 +54,12 @@ function AuthLink() {
                 <button onClick={authorize}>Ввести</button>
             </div>
             <div>
-                <p>Новый код: {accessCode}</p>
+                <p>Новый код доступа: {generatedCode}</p>
+                <button onClick={generateNewAccessCode}>Обновить код доступа</button>
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }
+
 export default AuthLink;
