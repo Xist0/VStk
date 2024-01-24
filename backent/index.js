@@ -9,11 +9,23 @@ const app = express();
 const port = 3000;
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
 });
+
+const users = [
+    {
+        id_user: '1',
+        user_role: 'Manager',
+        user_telegramm_id: '@1',
+        authorizationCode: '12345', // Предполагаемый код доступа пользователя
+        user_name: 'ISam',
+        user_surname: 'Kiti',
+    },
+    // ... (другие пользователи)
+];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,52 +33,56 @@ app.use(bodyParser.json());
 let accessCode = generateAccessCode();
 
 function generateAccessCode() {
-  return Math.floor(100000 + Math.random() * 900000);
+    return Math.floor(100000 + Math.random() * 900000);
 }
 
 app.get('/getAccessCode', (req, res) => {
-  res.json({ accessCode });
+    res.json({ accessCode });
 });
-
 
 app.get('/generateNewAccessCode', (req, res) => {
-  accessCode = generateAccessCode();
-  console.log(`Сгенерирован новый код - ${accessCode}`);
-  res.json({ accessCode });
-
-  // Установка таймера для удаления кода
-  setTimeout(() => {
     accessCode = generateAccessCode();
-    console.log(`Старый код удален - Сгенерирован новый код  (${accessCode})`);
-  }, 50000);
+    console.log(`Сгенерирован новый код - ${accessCode}`);
+    res.json({ accessCode });
+
+    // Установка таймера для удаления кода
+    setTimeout(() => {
+        accessCode = generateAccessCode();
+        console.log(`Старый код удален - Сгенерирован новый код (${accessCode})`);
+    }, 50000);
 });
 
-// Проверка кода доступа
+// Проверка кода доступа и айди телеграмм
 app.post('/authorize', (req, res) => {
-  const { authorizationCode } = req.body;
+    const { authorizationCode, telegrammId } = req.body;
 
-  if (authorizationCode === accessCode.toString()) {
-    res.json({ success: true });
-  } else {
-    res.status(401).json({ success: false, error: 'Unauthorized' });
-  }
+    // Поиск пользователя по коду и айди телеграмм
+    const user = users.find(
+        (u) => u.user_telegramm_id.toLowerCase() === telegrammId.toLowerCase() && u.authorizationCode === authorizationCode
+    );
+
+    if (user) {
+        res.status(200).send('Authorized');
+    } else {
+        res.status(401).send('Unauthorized');
+    }
 });
 
 // Проксирование запросов фронта к API бэкенда
 const apiProxy = createProxyMiddleware('/api', {
-  target: `https://${ip.address()}:${port}`,
-  changeOrigin: true,
+    target: `https://${ip.address()}:${port}`,
+    changeOrigin: true,
 });
 app.use(apiProxy);
 
 const options = {
-  key: fs.readFileSync('./CRMServe-private.key'),
-  cert: fs.readFileSync('./CRMServe.crt'),
+    key: fs.readFileSync('./CRMServe-private.key'),
+    cert: fs.readFileSync('./CRMServe.crt'),
 };
 
 const server = https.createServer(options, app);
 
 server.listen(port, () => {
-  const serverAddress = `https://${ip.address()}:${port}`;
-  console.log(`Server is running on ${serverAddress}`);
+    const serverAddress = `https://${ip.address()}:${port}`;
+    console.log(`Server is running on ${serverAddress}`);
 });
