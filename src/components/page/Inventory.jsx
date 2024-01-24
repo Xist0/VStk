@@ -89,20 +89,27 @@ const Inventory = () => {
         <div className='components'>
             {step === 1 && (
                 <>
-                    <h1>Приход</h1>
+                    <div className="component-heaer">
+                        <h1>@ поступление # от 00.00.00</h1>
+                    </div>
                     <ul className="multi-step-form-list">
                         {formData.map((item, index) => (
                             <li key={index} className={`multi-step-form-list-item ${quantityChanges[index] !== undefined ? 'edited' : ''}`}>
 
                                 <div className="milti-containet-rext">
-                                    <div className="product_name"><h1>{item.product_name} </h1></div> <div className="product_coll"><h3>{staticQuantities[index]}</h3></div>
+                                    <div className="product_name">
+                                        <MdModeEdit
+                                            alt="Edit"
+                                            className="edit-icon"
+                                            onClick={() => handleEdit(index)}
+                                        />
+                                        <h1>{item.product_name} </h1>
+                                    </div>
+                                    <div className="product_coll">
+                                        <h3>{staticQuantities[index]}</h3>
+                                    </div>
                                 </div>
                                 <div>
-                                    <MdModeEdit
-                                        alt="Edit"
-                                        className="edit-icon"
-                                        onClick={() => handleEdit(index)}
-                                    />
                                 </div>
                                 {activeIndex === index && (
                                     <div className='multi-step-form-list-editor'>
