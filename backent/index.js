@@ -48,7 +48,6 @@ const users = [
         user_name: 'Coock',
         user_surname: 'Migraf',
     },
-    
 ];
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -86,7 +85,12 @@ app.post('/authorize', (req, res) => {
     );
 
     if (user) {
-        res.status(200).send('Authorized');
+        res.status(200).json({
+            id_user: user.id_user,
+            user_name: user.user_name,
+            user_surname: user.user_surname,
+            user_role: user.user_role,
+        });
     } else {
         res.status(401).send('Unauthorized');
     }

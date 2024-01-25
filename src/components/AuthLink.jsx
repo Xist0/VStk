@@ -8,7 +8,7 @@ function AuthLink() {
     const [error, setError] = useState('');
 
     const isBrowser = typeof window !== 'undefined';
-    const serverAddress = isBrowser ? 'https://192.168.1.79:3000' : 'https://localhost:3000/';
+    const serverAddress = isBrowser ? 'https://26.73.88.245:3000' : 'https://localhost:3000/';
 
     const generateNewAccessCode = async () => {
         try {
@@ -32,7 +32,8 @@ function AuthLink() {
             );
 
             if (response.status === 200) {
-                window.location.href = '/auth';
+                localStorage.setItem('user', JSON.stringify(response.data));
+                window.location.href = '/app';
             } else {
                 setError('Unauthorized');
             }
