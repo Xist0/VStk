@@ -12,6 +12,7 @@
     align-items: center;
     background: #00a2ff;
     border-bottom: 1px solid;
+
 }
 .block-burger-menu{
     width: 30px;
@@ -26,10 +27,13 @@
     background: rgb(221, 222, 223);
     display: flex;
     flex-direction: column;
+    position: absolute;
 }
 .navigete{
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    z-index: 9999;
 }
 .navigete a{
     color: black;

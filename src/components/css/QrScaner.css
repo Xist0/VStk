@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+    padding-top: 20px;
 }
 
 .scaner.visible {
@@ -63,13 +64,15 @@ video {
 
 .qr-message,
 .start-button {
-    color: #000;
+    color: #fff;
 }
 
 .start-button {
-    background-color: #dfdfdf;
+    background-color: #1776CD;
+    display: flex;
     border: 0;
-    font-size: 14px;
-    padding: 0;
-    width: 100%;
+    border-radius: 7px;
+    font-size: 20px;
+    padding: 5px 16px;
+    width: auto
 }

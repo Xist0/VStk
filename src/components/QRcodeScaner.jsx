@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import './css/QrScaner.css'
+import BurgerMenu from './BurgermMenu';
 
 function QRcodeScaner() {
     const [isEnabled, setEnable] = useState(false);
@@ -46,12 +47,15 @@ function QRcodeScaner() {
     }, [isEnabled]);
 
     return (
-        <div className='visible'>
-            <div id='qrCodeContainer' className={`scaner ${isEnabled ? 'visible' : 'hidden'}`}></div>
-            {qrMessage && <div className='qr-message'>{qrMessage}</div>}
-            <button className='start-button' onClick={() => setEnable(!isEnabled)}>
-                {isEnabled ? 'Выкл' :  ` Сканировать документ `}
-            </button>
+        <div className="">
+            <BurgerMenu/>
+            <div className='visible'>
+                <div id='qrCodeContainer' className={`scaner ${isEnabled ? 'visible' : 'hidden'}`}></div>
+                {qrMessage && <div className='qr-message'>{qrMessage}</div>}
+                <button className='start-button' onClick={() => setEnable(!isEnabled)}>
+                    {isEnabled ? 'Выкл' : ` Сканировать документ `}
+                </button>
+            </div>
         </div>
     );
 }

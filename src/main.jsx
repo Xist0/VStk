@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Inventory from './components/page/Inventory';
 import Invoice from './components/Invoice';
+import QRcodeScaner from './components/QRcodeScaner';
 import AuthLink from './components/AuthLink';
 
 const routes = createBrowserRouter([
@@ -22,6 +23,10 @@ const routes = createBrowserRouter([
   {
     path: '/app',
     element: <App/>
+  },
+  {
+    path: '/QRcodeScanner',
+    element: <QRcodeScaner/>
   }
 ]);
 
