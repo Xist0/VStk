@@ -20,7 +20,7 @@ const routes = createBrowserRouter([
     element: <Invoice/>
   },
   {
-    path: '/auth',
+    path: '/app',
     element: <App/>
   }
 ]);

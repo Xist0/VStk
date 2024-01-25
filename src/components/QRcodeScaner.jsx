@@ -50,7 +50,7 @@ function QRcodeScaner() {
             <div id='qrCodeContainer' className={`scaner ${isEnabled ? 'visible' : 'hidden'}`}></div>
             {qrMessage && <div className='qr-message'>{qrMessage}</div>}
             <button className='start-button' onClick={() => setEnable(!isEnabled)}>
-                {isEnabled ? 'Выкл' : 'Сканировать QRCode'}
+                {isEnabled ? 'Выкл' :  ` Сканировать документ `}
             </button>
         </div>
     );

@@ -20,11 +20,35 @@ const users = [
         id_user: '1',
         user_role: 'Manager',
         user_telegramm_id: '@1',
-        authorizationCode: '12345', // Предполагаемый код доступа пользователя
+        authorizationCode: '1', // Предполагаемый код доступа пользователя
         user_name: 'ISam',
         user_surname: 'Kiti',
     },
-    // ... (другие пользователи)
+    {
+        id_user: '2',
+        user_role: 'Salesman',
+        user_telegramm_id:'@2',
+        authorizationCode: '2',
+        user_name: 'Keni',
+        user_surname: 'Opin',
+    },
+    {
+        id_user: '3',
+        user_role: 'Courier',
+        user_telegramm_id:'@3',
+        authorizationCode: '3',
+        user_name: 'Fin',
+        user_surname: 'Geris',
+    },
+    {
+        id_user: '4',
+        user_role: 'Baker',
+        user_telegramm_id:'@4',
+        authorizationCode: '4',
+        user_name: 'Coock',
+        user_surname: 'Migraf',
+    },
+    
 ];
 
 app.use(bodyParser.urlencoded({ extended: true }));
