@@ -8,7 +8,7 @@ function AuthLink() {
     const [error, setError] = useState('');
 
     const isBrowser = typeof window !== 'undefined';
-    const serverAddress = isBrowser ? 'https://26.73.88.245:3000' : 'https://localhost:3000/';
+    const serverAddress = isBrowser ? ' https://192.168.1.79:3000' : 'http://localhost:3000';
 
     const generateNewAccessCode = async () => {
         try {
