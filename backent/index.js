@@ -6,7 +6,7 @@ const ip = require('ip');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

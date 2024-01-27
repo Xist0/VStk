@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - vstk-network
+
+  backend:
+    build:
+      context: ./backent
+      dockerfile: Dockerfile.backend
+    ports:
+      - "5000:5000"
+    networks:
+      - vstk-network
+
+networks:
+  vstk-network:
+    driver: bridge
