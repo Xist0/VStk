@@ -8,7 +8,7 @@ function AuthLink() {
     const [error, setError] = useState('');
 
     const isBrowser = typeof window !== 'undefined';
-    const serverAddress = isBrowser ? 'https://172.22.144.1:5000' : 'http://localhost:3000';
+    const serverAddress = isBrowser ? 'https://192.168.1.65:5000' : 'http://localhost:3000';
 
     const generateNewAccessCode = async () => {
         try {
@@ -48,7 +48,7 @@ function AuthLink() {
     }, []);
 
     return (
-        <div className="components">
+        <div className="component">
             <h1> Аутентификация</h1>
             <div>
                 <label>Код доступа:</label>
