@@ -6,7 +6,7 @@ const ip = require('ip');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -110,6 +110,6 @@ const options = {
 const server = https.createServer(options, app);
 
 server.listen(port, () => {
-    const serverAddress = `https://${ip.address()}:${port}`;
+    const serverAddress = `https://localhost:${port}`;
     console.log(`Server is running on ${serverAddress}`);
 });

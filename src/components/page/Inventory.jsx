@@ -11,6 +11,7 @@ const Inventory = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [staticQuantities, setStaticQuantities] = useState({});
     const [step, setStep] = useState(1);
+    const [initialData, setInitialData] = useState([]);
 
     useEffect(() => {
         const staticQuantitiesData = {};
@@ -18,6 +19,7 @@ const Inventory = () => {
             staticQuantitiesData[index] = item.product_quantity;
         });
         setStaticQuantities(staticQuantitiesData);
+        setInitialData(formData); // Сохраняем исходные данные
     }, [formData]);
 
     const handleEdit = (index) => {
@@ -67,6 +69,7 @@ const Inventory = () => {
             }
         });
     }, [step]);
+
     const handleTextareaChange = (index, event) => {
         const textareaRef = textareaRefs.current[index];
 
@@ -83,8 +86,6 @@ const Inventory = () => {
             handleCommentChange(index, combinedText);
         }
     };
-
-
 
     return (
         <div className="">
@@ -152,7 +153,15 @@ const Inventory = () => {
                             <ul className='multi-step-form-list'>
                                 {formData.map((item, index) => (
                                     <li key={index} className={quantityChanges[index] !== undefined ? 'multi-step-form-list-item-rec' : 'multi-step-form-list-item'}>
-                                        <h1>{item.product_name}</h1> {quantityChanges[index] !== undefined ? <h4>Изменено: {quantityChanges[index]}</h4> : <h3>{item.product_quantity}</h3>}
+                                        <h1>{item.product_name}</h1> 
+                                        {quantityChanges[index] !== undefined ? (
+                                            <>
+                                                <del><h3>{initialData[index].product_quantity}</h3></del>
+                                                <h4> {quantityChanges[index]}</h4>
+                                            </>
+                                        ) : (
+                                            <h3>{initialData[index].product_quantity}</h3>
+                                        )}
                                         <br />
                                         <div className="comment-wrapper">
                                             {commentChanges[index] !== undefined && (

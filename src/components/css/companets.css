@@ -104,7 +104,6 @@
 }
 
 main {
-    /* Чтобы занимал оставшееся пространство */
     flex-grow: 1;
 }
 
@@ -150,9 +149,12 @@ body {
     border-bottom: 1px solid #000000;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
     font-size: 20px;
     align-items: center;
+    flex-wrap: wrap;
+}
+.multi-step-form-list-item > h1 {
+    width: 80%;
 }
 
 .multi-step-form-list-item>edited {
@@ -176,11 +178,17 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
 }
 
 .multi-step-form-list-item-rec h1 {
     font-size: 16px;
+}
+.multi-step-form-list-item-rec h4{
+    color: red;
+    font-size: 20px;
+    
 }
 
 .multi-step-form-list-editor {
@@ -370,4 +378,5 @@ body {
         border-radius: 3px;
         padding: 2px;
     }
+    
 }
