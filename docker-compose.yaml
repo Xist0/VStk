@@ -6,16 +6,16 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "80:80"
     networks:
       - vstk-network
 
   backend:
     build:
-      context: ./backent
+      context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "3000:3000"
     networks:
       - vstk-network
 

@@ -9,10 +9,8 @@ RUN npm install
 # Копируем остальные файлы проекта
 COPY . .
 
-# Собираем фронтенд
-RUN npm run build
 
-EXPOSE 5173
+EXPOSE 80
 
 # Запускаем статический сервер
 CMD ["npm", "run", "dev"]

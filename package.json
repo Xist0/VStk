@@ -8,7 +8,7 @@
     "build": "concurrently \"npm:build:backend\" \"npm:build:frontend\"",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "dev:backend": "node ./backent/index.js",
+    "dev:backend": "node ./backend/index.js",
     "dev:frontend": "vite --host ",
     "build:backend": "npm run build",
     "build:frontend": "vite build"
