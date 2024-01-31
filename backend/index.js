@@ -27,7 +27,7 @@ let users = [
     {
         id_user: '2',
         user_role: 'Salesman',
-        user_telegramm_id:'@2',
+        user_telegramm_id: '@2',
         authorizationCode: generateAccessCode(),
         user_name: 'Keni',
         user_surname: 'Opin',
@@ -35,7 +35,7 @@ let users = [
     {
         id_user: '3',
         user_role: 'Courier',
-        user_telegramm_id:'@3',
+        user_telegramm_id: '@3',
         authorizationCode: generateAccessCode(),
         user_name: 'Fin',
         user_surname: 'Geris',

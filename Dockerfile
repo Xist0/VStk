@@ -1,18 +1,13 @@
-# Используйте образ Node.js LTS
-FROM node:lts as builder
+FROM node
 
-# Устанавливаем зависимости
 WORKDIR /app
-COPY package*.json ./
+
+COPY package.json /app
+
 RUN npm install
 
-# Копируем остальные файлы проекта
 COPY . .
 
-# Собираем фронтенд
-RUN npm run build
+EXPOSE 3000
 
-EXPOSE 5173
-
-# Запускаем статический сервер
-CMD ["npm", "run", "dev"]
+CMD ["node", "index.js"]
